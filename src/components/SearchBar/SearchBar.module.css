@@ -1,0 +1,36 @@
+.header {
+    display: flex;
+    justify-content: center;
+    padding: 4px 0px;
+    background-color: rgb(94, 94, 255);
+    box-sizing: border-box;
+}
+
+.form {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    background-color: white;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+
+.input {
+    width: 360px;
+    border: none;
+    outline: none;
+    background: none;
+    padding: 8px 0px;
+}
+
+
+
+.button {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
