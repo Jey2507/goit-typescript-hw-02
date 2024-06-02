@@ -1,28 +1,38 @@
-import SearchBar from './components/SearchBar/SearchBar'
-import ImageGallery from './components/ImageGallery/ImageGallery'
-import Loader from './components/Loader/Loader'
+import SearchBar from '../SearchBar/SearchBar'
+import ImageGallery from '../ImageGallery/ImageGallery'
+import Loader from '../Loader/Loader'
 import './App.css'
 import { useEffect, useState, useRef } from 'react'
-import { fetchImages } from './gallery-api'
-import ErrorMessage from './components/ErrorMessage/ErrorMessage'
-import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn'
-import ImageModal from './components/ImageModal/ImageModal'
+import { fetchImages } from '../../gallery-api'
+import ErrorMessage from '../ErrorMessage/ErrorMessage'
+import LoadMoreBtn from '../LoadMoreBtn/LoadMoreBtn'
+import ImageModal from '../ImageModal/ImageModal'
+
+interface Image {
+  id: number,
+  url: string,
+  urls: {
+    small: string;
+    regular: string;
+},
+  alt_description: string;
+}
 
 export default function App() {
-  const [gallery, setGallery] = useState([]);
-  const [spinner, setSpinner] = useState(false);
-  const [error, setError] = useState(false);
+  const [gallery, setGallery] = useState<Image[]>([]);
+  const [spinner, setSpinner] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
-  const [page, setPage] = useState(1);
-  const [query, setQuery] = useState("");
+  const [page, setPage] = useState<number>(1);
+  const [query, setQuery] = useState<string>("");
 
-  const loadMoreButtonRef = useRef(null);
+  const loadMoreButtonRef = useRef<HTMLButtonElement | null>(null);
 
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
 
-  const handlSearch = async (newQuery) => {
+  const handlSearch = async (newQuery:string) => {
     setQuery(newQuery);
     setPage(1);
     setGallery([]);
@@ -41,7 +51,7 @@ export default function App() {
       setError(false)
       try {
         setSpinner(true);
-        const data = await fetchImages(query, page);
+        const data:Image[] = await fetchImages(query, page);
         if (data.length === 0) {
           throw new Error("No item..");
       }
@@ -69,7 +79,7 @@ useEffect(() => {
   }
 }, [gallery]);
 
-const openModal = (image) => {
+const openModal = (image: string) => {
   setSelectedImage(image);
   setIsOpen(true);
 }
